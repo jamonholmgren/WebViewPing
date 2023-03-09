@@ -1,42 +1,34 @@
-import React, {useRef} from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-} from 'react-native';
-
-import {WebView} from 'react-native-webview';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import React, { useRef } from "react"
+import { SafeAreaView, StatusBar, Text, useColorScheme } from "react-native"
+import { WebView } from "react-native-webview"
+import { Colors } from "react-native/Libraries/NewAppScreen"
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useColorScheme() === "dark"
 
-  const webref = useRef<WebView>(null);
+  const webref = useRef<WebView>(null)
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     flex: 1,
-  };
+  }
 
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={isDarkMode ? "light-content" : "dark-content"}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <Text style={{fontSize: 30, padding: 5}}>WebView:</Text>
+      <Text style={{ fontSize: 30, padding: 5 }}>WebView:</Text>
       <WebView
-        style={{width: 400, height: 200}}
+        style={{ width: 400, height: 200 }}
         ref={webref}
-        onMessage={event => {
-          const dataFromWebView = event.nativeEvent.data;
+        onMessage={(event) => {
+          const dataFromWebView = event.nativeEvent.data
           // send back to webview via ref
           webref.current?.injectJavaScript(
-            `receiveMessageFromRN('${dataFromWebView}');`,
-          );
+            `receiveMessageFromRN('${dataFromWebView}');`
+          )
         }}
         source={{
           html: `
@@ -82,7 +74,7 @@ function App(): JSX.Element {
         }}
       />
     </SafeAreaView>
-  );
+  )
 }
 
-export default App;
+export default App
